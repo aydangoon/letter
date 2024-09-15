@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>you got mail</title>
+    <!-- <meta name="og:image" content="assets/letter.webp" /> -->
+    <meta name="og:video" content="assets/mailbox.mp4" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="prefetch" href="./assets/handwriting.ttf" as="font" />
+    <link rel="prefetch" href="./assets/letter.webp" as="image" />
+    <link rel="prefetch" href="./assets/bird.gif" as="image" />
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="text-zinc-800">
+    <div class="flex items-center justify-center h-[100dvh]">
+      <main
+        class="relative h-full w-full sm:w-[500px] sm:h-[800px] overflow-hidden transform-gpu"
+      >
+        <img
+          id="bird"
+          src="./assets/bird.gif"
+          class="absolute h-36 top-1/2 left-1/2 z-[2] transform-gpu"
+        />
+        <img
+          id="letter"
+          src="./assets/letter.webp"
+          class="absolute h-20 top-1/2 left-1/2 z-[1]"
+        />
+        <img
+          id="arrows-down"
+          src="./assets/arrows-down.webp"
+          class="absolute h-16 top-[40%] left-[50%] translate-x-[-50%]"
+        />
+        <img
+          id="arrow-right"
+          src="./assets/arrow-right-2.webp"
+          class="absolute h-12 top-[51%] left-[15%]"
+        />
+        <img
+          id="arrow-left"
+          src="./assets/arrow-right.webp"
+          class="absolute scale-x-[-1] h-16 top-[52%] right-[10%]"
+        />
+        <div class="absolute top-[70%] w-full text-center">
+          <p id="subject-text" class="">to subs</p>
+        </div>
+      </main>
+    </div>
+  </body>
+  <script>
+    async function main() {
+      const bird = $("#bird");
+      const letter = $("#letter");
+      const arrowsDown = $("#arrows-down");
+      const arrowRight = $("#arrow-right");
+      const arrowLeft = $("#arrow-left");
+      const subjectText = $("#subject-text");
+
+      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      // 1. have bird fly in with letter
+      bird.css({
+        transform: "translate(-50%, -50%)",
+        left: "-90px",
+        top: "25%",
+      });
+      letter.css({
+        transform: "translate(-50%, calc(-50% + 40px))",
+        left: "-90px",
+        top: "25%",
+      });
+      arrowsDown.css({ opacity: 0 });
+      arrowRight.css({ opacity: 0 });
+      arrowLeft.css({ opacity: 0 });
+      subjectText.css({ opacity: 0 });
+      await sleep(500);
+
+      let ANIM_TIME = 4000;
+      bird.animate({ left: "50%", top: "50%" }, ANIM_TIME, "swing");
+      letter.animate({ left: "50%", top: "50%" }, ANIM_TIME, "swing");
+      await sleep(ANIM_TIME);
+
+      // 2. bird flies away, letter stays
+      ANIM_TIME = 2_000;
+      bird.animate({ left: "130%", top: "25%" }, ANIM_TIME, "swing");
+      await sleep(ANIM_TIME);
+
+      // 3. apply css class to have letter flip flop
+      letter.addClass("_flip-flop");
+      // 4. arrows and text appear.
+      ANIM_TIME = 300;
+      arrowsDown.animate({ opacity: 1 }, ANIM_TIME);
+      arrowRight.animate({ opacity: 1 }, ANIM_TIME);
+      arrowLeft.animate({ opacity: 1 }, ANIM_TIME);
+
+      await sleep(ANIM_TIME);
+      ANIM_TIME = 500;
+      subjectText.animate({ opacity: 1 }, ANIM_TIME);
+
+      // add onClick to letter that navigates to letter.html
+      letter.click(() => {
+        window.location.href = "./letter.html";
+      });
+    }
+    $(document).ready(main);
+  </script>
+</html>

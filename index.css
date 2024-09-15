@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "Handwriting";
+  src: url("assets/handwriting.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "Handwriting", sans-serif;
+}
+
+@keyframes flip-flog {
+  0%,
+  100% {
+    transform: translate(-50%, calc(-50% + 40px)) rotate(-9deg);
+  }
+  50% {
+    transform: translate(-50%, calc(-50% + 40px)) rotate(9deg);
+  }
+}
+
+._flip-flop {
+  animation: flip-flog 1.2s infinite steps(2);
+}
